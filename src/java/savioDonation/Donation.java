@@ -29,13 +29,13 @@ public class Donation extends MesTest{
 	private GatewaySettings settings;
 	private final static Logger LOG = Logger.getLogger(Donation.class.getName());
 	
-	private String profileId = "94100012095600000004";
-	private String profileIdRBS = "94100012095600000005";
+	private String profileId = "9410001209560000000400";
+	private String profileIdRBS = "9410001209560000000500";
 	private String profileKey = "afqSNFoJJwcBPlbAAMHfnELpHGriJowL";
 	
-	private String user = "941000120956RBS";
+	private String user = "941000120956RBS!!";
 	//private String pass = "JcTaArSavio@2015";
-	private String pass = "JcTaArSavio@2015";
+	private String pass = "JcTaArSavio@2015!!";
 	
 	
 	
