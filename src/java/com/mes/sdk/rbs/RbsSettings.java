@@ -30,7 +30,7 @@ public class RbsSettings extends Settings<RbsSettings> {
 	 */
 	public RbsSettings() {
 		super();
-		hostUrl(URL_TEST);
+		hostUrl(URL_LIVE);
 	}
 	
 	/**

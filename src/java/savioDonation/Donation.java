@@ -29,11 +29,13 @@ public class Donation extends MesTest{
 	private GatewaySettings settings;
 	private final static Logger LOG = Logger.getLogger(Donation.class.getName());
 	
-	private String profileId = "94100011090100000002";
-	private String profileKey = "GXiKlIqCfWnZRuFgUCMuiBAPYKBlsELl";
+	private String profileId = "94100012095600000004";
+	private String profileIdRBS = "94100012095600000005";
+	private String profileKey = "afqSNFoJJwcBPlbAAMHfnELpHGriJowL";
 	
-	private String user = "941000110901";
-	private String pass = "JcTaArSavio20151";
+	private String user = "941000120956RBS";
+	//private String pass = "JcTaArSavio@2015";
+	private String pass = "JcTaArSavio@2015";
 	
 	
 	
@@ -51,7 +53,7 @@ public class Donation extends MesTest{
 			String clientReferenceNumber) {
 		settings = new GatewaySettings();
 		settings.credentials(profileId, profileKey)
-			.hostUrl(GatewaySettings.URL_CERT)
+			.hostUrl(GatewaySettings.URL_LIVE)
 			.method(Settings.Method.POST)
 			.timeout(10000)
 			.verbose(true);
@@ -95,7 +97,7 @@ public class Donation extends MesTest{
 			String startYear,
 			String paymentCount) {
 		rbsSettings = new RbsSettings()
-			.credentials(user, pass, profileId)
+			.credentials(user, pass, profileIdRBS)
 			.hostUrl(RbsSettings.URL_LIVE)
 			.verbose(true);
 		
@@ -128,8 +130,8 @@ public class Donation extends MesTest{
 	
 	public boolean cardDeleteRecord(String custumerId) {
 		rbsSettings = new RbsSettings()
-			.credentials(user, pass, profileId)
-			.hostUrl(RbsSettings.URL_TEST)
+			.credentials(user, pass, profileIdRBS)
+			.hostUrl(RbsSettings.URL_LIVE)
 			.verbose(true);
 		
 		rbs = new Rbs(rbsSettings);
@@ -153,8 +155,8 @@ public class Donation extends MesTest{
 	
 	public boolean cardInquireRecord(String custumerId) {
 		rbsSettings = new RbsSettings()
-			.credentials(user, pass, profileId)
-			.hostUrl(RbsSettings.URL_TEST)
+			.credentials(user, pass, profileIdRBS)
+			.hostUrl(RbsSettings.URL_LIVE)
 			.verbose(true);
 		
 		rbs = new Rbs(rbsSettings);
@@ -187,8 +189,8 @@ public class Donation extends MesTest{
 			String startYear,
 			String paymentCount) {
 		rbsSettings = new RbsSettings()
-			.credentials(user, pass, profileId)
-			.hostUrl(RbsSettings.URL_TEST)
+			.credentials(user, pass, profileIdRBS)
+			.hostUrl(RbsSettings.URL_LIVE)
 			.verbose(true);
 		
 		rbs = new Rbs(rbsSettings);
@@ -214,12 +216,12 @@ public class Donation extends MesTest{
 		}
 		return false;
 	}
-
+/*
 	public String storeCard(){
 		
 		settings = new GatewaySettings();
 		settings.credentials(profileId, profileKey)
-			.hostUrl(GatewaySettings.URL_CERT)
+			.hostUrl(GatewaySettings.URL_LIVE)
 			.method(Settings.Method.POST)
 			.timeout(10000)
 			.verbose(true);
@@ -245,11 +247,13 @@ public class Donation extends MesTest{
 		}
 		return "";
 	}
+	*/
+	/*
 public void deStoreCard(String cardStoreId){
 		
 		settings = new GatewaySettings();
 		settings.credentials(profileId, profileKey)
-			.hostUrl(GatewaySettings.URL_CERT)
+			.hostUrl(GatewaySettings.URL_LIVE)
 			.method(Settings.Method.POST)
 			.timeout(10000)
 			.verbose(true);
@@ -272,7 +276,7 @@ public void deStoreCard(String cardStoreId){
 			e.printStackTrace();
 		}
 	}
-
+*/
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub

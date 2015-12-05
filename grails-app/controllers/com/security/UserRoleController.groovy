@@ -18,6 +18,9 @@ class UserRoleController {
     def show(UserRole userRoleInstance) {
         respond userRoleInstance
     }
+	def show1() {
+		respond UserRole.get(params.id)
+	}
 
     def create() {
         respond new UserRole(params)
@@ -40,7 +43,7 @@ class UserRoleController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'userRole.label', default: 'UserRole'), userRoleInstance.id])
-                redirect userRoleInstance
+                redirect(action: "show1",  id: userRoleInstance.id)
             }
             '*' { respond userRoleInstance, [status: CREATED] }
         }

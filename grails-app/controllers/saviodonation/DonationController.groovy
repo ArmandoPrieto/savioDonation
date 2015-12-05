@@ -1,7 +1,7 @@
 package saviodonation
 import grails.transaction.Transactional;
 import savioDonation.Donation
-
+import java.util.UUID;
 @Transactional(readOnly = true)
 class DonationController {
 	def RBSService
@@ -13,6 +13,7 @@ class DonationController {
 	}
 	@Transactional
 	def process(){
+		UUID idOne = UUID.randomUUID();
 		
 		println params["first_name"]
 		println params["last_name"]
@@ -28,7 +29,7 @@ class DonationController {
 		println params["cvv2"]
 		println params["card_month"]
 		println params["card_year"]
-		//	withForm {
+			withForm {
 		if(params["monthly"]){
 			Address address = new Address()
 			address.setAddress(params["address"])
@@ -49,11 +50,22 @@ class DonationController {
 			cardHolder.setPhone(params["phone"])
 		    cardHolder.address = address
 			cardHolder.addToStoreCard(storeCard)
-		
+			int amount
+			boolean process = true
+			try{
+			amount = Integer.parseInt(params["pamount"].toString())
+			}catch(Exception e ){
+				process = false				
+			}
+			
+			if(amount<10){
+				process = false
+			}
+			
 			CardHolder.withTransaction{status ->
-				if(cardHolder.save(flush:true ,failOnError: true)){
+				if(cardHolder.save(flush:true ,failOnError: true) && process){
 					//Monhtly transaction
-					def date = new Date() + 5
+					def date = new Date()+1
 					int year = date[Calendar.YEAR]
 					int month = date[Calendar.MONTH]+1
 					int day = date.getAt(Calendar.DATE)
@@ -68,6 +80,20 @@ class DonationController {
 						year.toString().substring(2),
 						"12")
 						if(created){
+							sendEmail(params["email"], "donation@saintdominicsavio.org",
+								params["first_name"] + " "+params["last_name"],
+								params["address"],
+								params["city"],
+								params["state"],
+								params["zipCode"],
+								params["country"],
+								"Monthly donation",
+								"12 months",
+								params["pamount"],
+								idOne.toString().substring(0, 8),
+								new Date(),
+								params["phone"]);
+								
 							render(view: "succes")
 						}else{
 								status.setRollbackOnly()
@@ -80,6 +106,7 @@ class DonationController {
 			}
 		}else{
 			//Regular transaction
+		
 			Donation d = new Donation()
 			boolean result =d.sale(
 				params["first_name"],
@@ -92,10 +119,23 @@ class DonationController {
 				params["card_month"]+params["card_year"].toString().substring(2), 
 				params["cvv2"],
 				params["pamount"],
-				"1234658",
+				idOne.toString().substring(0, 8),
 				"Savio Donation System")
 			
 			if(result){
+				sendEmail(params["email"], "donation@saintdominicsavio.org",
+					params["first_name"] + " "+params["last_name"],
+					params["address"],
+					params["city"],
+					params["state"],
+					params["zipCode"],
+					params["country"],
+					"One time donation",
+					"N/A",
+					params["pamount"],
+					idOne.toString().substring(0, 8),
+					new Date(),
+					params["phone"]);
 				render(view: "succes")
 			}else{
 					
@@ -108,12 +148,63 @@ class DonationController {
 			
 		
 			
-	/* }.invalidToken {
+	 }.invalidToken {
 		// bad request
-	 		render(view: "/error")
+	 		//render(view: "/error")
+			 render(view: "donationError")
 	 }
-		*/
+		
 	
+		
+		
+	}
+	
+	def emailTest(){
+		
+		sendEmail("prieto.arm@gmail.com", "donation@saintdominicsavio.org");
+		
+	}
+	
+	
+	public void sendEmail(String tox, 
+		String fromx,
+		String name,
+		String address,
+		String city,
+		String state,
+		String zipCode,
+		String country,
+		String donationType,
+		String period,
+		String amount,
+		String transactionNumber,
+		Date date,
+		String phone){
+		
+		try{
+		sendMail {
+			to tox
+			from fromx
+			subject "Thank you"
+			html g.render(template:"emailInvoice", model: [name:name,
+				address: address,
+				city: city,
+				state: state,
+				zipCode: zipCode,
+				country: country,
+				donationType:donationType,
+				period:period,
+				amount: amount,
+				transactionNumber: transactionNumber,
+				date: date,
+				phone: phone,
+				email: tox]) 
+		 }
+		}catch(Exception e){
+			e.printStackTrace()
+			System.out0.println("Email sending error")
+		}
+		
 		
 		
 	}

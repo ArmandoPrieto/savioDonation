@@ -18,12 +18,19 @@
 	</head>
 	<body>
 	<a href="http://grails.org"><asset:image src="grails_logo.png" alt="Savio" /></a>
-		<div id="grailsLogo" role="banner"><h1>ST. DOMINIC SAVIO CURCH - DONATION SYSTEM</h1>
+		<div id="grailsLogo" role="banner"><h1>ST. DOMINIC SAVIO CHURCH - DONATION SYSTEM</h1>
+	
+		<sec:ifLoggedIn>
+		<div style="float:right;"><g:link controller="logout" class="logout">Logout</g:link>
+		</div>
+		</sec:ifLoggedIn>
 		</div>
 		
-		<br />
+		
+		
+		
 		<g:layoutBody/>
-		<div class="footer" role="contentinfo">Powered by <a href="http://www.armandoprieto.net" style="color:blue;">Armando Prieto</a></div>
+		<div class="footer" role="contentinfo">Powered by <a href="https://www.facebook.com/taptodesigns/?fref=ts" style="color:blue;">Tapto</a></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 	</body>
 </html>

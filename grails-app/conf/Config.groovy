@@ -119,7 +119,7 @@ log4j.main = {
 
 
 
-grails.plugin.springsecurity.rejectIfNoRule = true
+grails.plugin.springsecurity.rejectIfNoRule = false
 grails.plugin.springsecurity.fii.rejectPublicInvocations = true
 grails.plugin.springsecurity.securityConfigType = "InterceptUrlMap"
 grails.plugin.springsecurity.logout.afterLogoutUrl = "/login/index"
@@ -146,13 +146,32 @@ grails.plugin.springsecurity.interceptUrlMap = [
 	'/donation/**':                   ['permitAll'],
 	'/donation/index':                ['permitAll'],
 	'/donation/process':              ['permitAll'],
+	'/donation/emailTest':              ['permitAll'],
 	'/login/**':              		  ['permitAll'],
 	'/logout/**':                     ['permitAll'],
 	'/cardHolder/index/**':  			['ROLE_ADMINISTRATOR','ROLE_SUPER_USER'],
 	'/cardHolder/show/**':  			['ROLE_ADMINISTRATOR','ROLE_SUPER_USER'],
-	'/cardHolder/delete/**':  			      ['ROLE_ADMINISTRATOR','ROLE_SUPER_USER'],
+	'/cardHolder/delete/**':  			['ROLE_ADMINISTRATOR','ROLE_SUPER_USER'],
+	'/cardHolder/forceDelete/**':  		['ROLE_ADMINISTRATOR','ROLE_SUPER_USER'],
 	'/storeCard/show/**':  			  ['ROLE_ADMINISTRATOR','ROLE_SUPER_USER'],
-	'/address/show/**':  			      ['ROLE_ADMINISTRATOR','ROLE_SUPER_USER']
+	'/address/show/**':  			      ['ROLE_ADMINISTRATOR','ROLE_SUPER_USER'],
+	'/user/**':                   ['ROLE_SUPER_USER'],
+	'/role/**':                   ['ROLE_SUPER_USER'],
+	'/userRole/**':                   ['ROLE_SUPER_USER']
 	
 ]
 
+
+
+grails.mail.default.from = "donation@saintdominicsavio.org"
+grails {
+	mail {
+	  host = "smtp.saintdominicsavio.org"
+	  port = 587
+	  username = "donation@saintdominicsavio.org"
+	  password = "JcTaAr@Savio2015"
+	  props = ["mail.smtp.starttls.enable":"true",
+				   "mail.smtp.port":"587"]
+ 
+	}
+ }

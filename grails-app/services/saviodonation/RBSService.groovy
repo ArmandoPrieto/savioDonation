@@ -47,7 +47,7 @@ class RBSService {
 	def update(String custumerId){
 			Donation d = new Donation()
 			def cardHolder = CardHolder.get(Integer.parseInt(custumerId))
-			def date = new Date() + 5
+			def date = new Date() 
 			int year = date[Calendar.YEAR]
 			int month = date[Calendar.MONTH]+1
 			int day = date.getAt(Calendar.DATE)
@@ -56,7 +56,7 @@ class RBSService {
 				cardHolder.storeCard[0].expDate,
 				cardHolder.address.address,
 				cardHolder.address.zipCode,
-				params.amount?:"16.0",
+				params.amount?:"10.0",
 				day<10?("0"+day):(day.toString()),
 				month<10?("0"+month):(month.toString()),
 				year.toString().substring(2),

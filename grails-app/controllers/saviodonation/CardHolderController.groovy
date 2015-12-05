@@ -12,9 +12,13 @@ class CardHolderController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
+		
+		
         params.max = Math.min(max ?: 10, 100)
         respond CardHolder.list(params), model:[cardHolderInstanceCount: CardHolder.count()]
     }
+	
+	
 
     def show(CardHolder cardHolderInstance) {
         respond cardHolderInstance
@@ -105,6 +109,12 @@ class CardHolderController {
             '*'{ render status: NO_CONTENT }
         }
     }
+	def forceDelete(){
+		
+		RBSService.delete(params.id)
+		
+		render "<h2>Record ${params.id} deleted</h2>"
+	}
 
     protected void notFound() {
         request.withFormat {
